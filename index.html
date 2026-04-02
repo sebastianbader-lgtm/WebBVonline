@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burschenverein Harlaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: #f7f4ee;
+      color: #171717;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #ece7df;
+    }
+
+    .header-inner {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    .menu-toggle {
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+    }
+
+    .menu {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(255,255,255,0.98);
+      padding: 18px;
+      border-radius: 16px;
+      position: absolute;
+      top: 62px;
+      right: 0;
+      min-width: 220px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      border: 1px solid #ece7df;
+    }
+
+    .menu.open { display: flex; }
+
+    .menu a {
+      font-weight: 600;
+      color: #2d3440;
+    }
+
+    .hero {
+      padding: 32px 0 56px;
+    }
+
+    .hero-box {
+      min-height: 540px;
+      padding: 56px;
+      border-radius: 24px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background:
+        linear-gradient(rgba(0,0,0,0.38), rgba(0,0,0,0.38)),
+        url('/images/hero.jpg') center 38% / cover;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.65;
+      color: #4e5560;
+    }
+
+    .hero-box p {
+      color: rgba(255,255,255,0.92);
+      max-width: 640px;
+      margin-top: 16px;
+      font-size: 1.05rem;
+    }
+
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0;
+    }
+
+    .hero-box .serif {
+      font-size: 1.5em;
+    }
+
+    .events {
+      margin-top: 48px;
+    }
+
+    .events h3 {
+      margin: 0 0 20px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2d3440;
+    }
+
+    .event-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .event-item {
+      background: white;
+      border-left: 4px solid #8b4513;
+      padding: 16px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .event-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .event-date {
+      font-size: 0.85rem;
+      color: #8b4513;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .event-title {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #171717;
+    }
+
+    .event-description {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #4e5560;
+      line-height: 1.5;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+    }
+
+    .image img {
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    .footer {
+      padding: 40px 0 56px;
+      border-top: 1px solid #ddd3c7;
+      color: #666;
+    }
+
+    .footer-logo-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-logo {
+      width: 256px;
+      height: 256px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    .logo-section {
+      padding: 80px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      min-height: 416px;
+    }
+
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .hero-box {
+        min-height: 460px;
+        padding: 28px;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="/images/logo (1).png" alt="BV Harlaching Logo" class="brand-logo">
+        BV Harlaching
+      </div>
+      <button class="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" onclick="toggleMenu()">☰</button>
+      <nav class="menu" id="menu">
+        <a href="#start">Start</a>
+        <a href="/verein.html">Verein</a>
+        <a href="/veranstaltungen.html">Veranstaltungen</a>
+        <a href="#mitglied">Mitglied werden</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="container">
+        <div class="hero-box">
+          <h1>Brauchtum, Zusammenhalt,<br><span class="serif">a guade Zeit!</span></h1>
+          <p>Der Burschenverein Harlaching e.V. wurde 2008 gegründet und ist heute ein fester Bestandteil des Stadtteils.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="verein">
+      <div class="container grid">
+        <div>
+          <h2>Der Verein</h2>
+          <p>Seit 2008 pflegen wir bayrisches Brauchtum und stärken den sozialen Charakter im Stadtteil Harlaching.</p>
+        </div>
+        <div class="image">
+          <img src="/images/verein.jpg" alt="Vereinsleben des Burschenvereins Harlaching">
+          <p style="margin-top: 8px; font-size: 0.9rem; color: #666; font-style: italic; text-align: center;">Unser Vorstand</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="veranstaltungen">
+      <div class="container grid">
+        <div class="image">
+          <img src="/images/burschenfest.jpg" alt="Burschenfest Harlaching im Festzelt">
+        </div>
+        <div>
+          <h2>Burschenfest 2026</h2>
+          <p>Vom 11. bis 14. Juni 2026 findet unser großes Burschenfest mit Biergarten, Festzelt und Musik statt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Anstehende Veranstaltungen</h2>
+        <div class="events">
+          <div class="event-list">
+            <div class="event-item">
+              <div class="event-date">11. – 14. Juni 2026</div>
+              <h3 class="event-title">Burschenfest 2026</h3>
+              <p class="event-description">Unser Highlight des Jahres mit Festzelt, Biergarten und Live-Musik. Die ganze Gemeinschaft ist herzlich eingeladen!</p>
+            </div>
+
+            <div class="event-item">
+              <div class="event-date">Jeden 2. Freitag</div>
+              <h3 class="event-title">Stammtisch</h3>
+              <p class="event-description">Treffe Mitglieder und Freunde des Vereins. Ort und Zeit auf Anfrage erhältlich.</p>
+            </div>
+
+            <div class="event-item">
+              <div class="event-date">Mai 2026</div>
+              <h3 class="event-title">Maibaumaufstellen</h3>
+              <p class="event-description">Traditioneller Höhepunkt im Mai – das Aufstellen unseres Maibaums. Alle sind willkommen!</p>
+            </div>
+
+            <div class="event-item">
+              <div class="event-date">Dezember 2026</div>
+              <h3 class="event-title">Weihnachtsfeier</h3>
+              <p class="event-description">Gemütliches Beisammensein zur Weihnachtszeit mit Lagerfeuer und gemeinsamen Liedern.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mitglied">
+      <div class="container grid">
+        <div>
+          <h2>Mitglied werden</h2>
+          <p>Wenn du älter als 16 Jahre bist, kannst du jederzeit beim Stammtisch vorbeischauen und Mitglied werden.</p>
+        </div>
+        <div class="card" id="kontakt">
+          <strong>Kontakt</strong>
+          <p style="margin-top:12px; color:#4e5560;">info@bv-harlaching.de<br>@bvharlaching</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="logo-section">
+    <div class="container">
+      <div class="footer-logo-container">
+        <img src="/images/logo.png" alt="BV Harlaching Logo" class="footer-logo">
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <strong>Burschenverein Harlaching e.V.</strong><br>
+      Brauchtum, Zusammenhalt, a guade Zeit – mitten in Harlaching
+      <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <a href="#impressum" style="margin-right: 24px; text-decoration: underline; font-weight: 400;">Impressum</a>
+          <a href="#datenschutz" style="text-decoration: underline; font-weight: 400;">Datenschutz</a>
+        </div>
+        <div>
+          <a href="https://facebook.com/bvharlaching" style="margin-right: 16px; color: #666;" title="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com/bvharlaching" style="color: #666;" title="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+  ANLEITUNG FÜR ECHTE BILDER:
+  Lege im gleichen Ordner einen Unterordner /images/ an und benenne deine Bilder so:
+  - hero.jpg
+  - verein.jpg
+  - burschenfest.jpg
+  -->
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const button = document.querySelector('.menu-toggle');
+      const isOpen = menu.classList.toggle('open');
+      button.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    document.querySelectorAll('#menu a').forEach((link) => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById('menu');
+        const button = document.querySelector('.menu-toggle');
+        menu.classList.remove('open');
+        button.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>
